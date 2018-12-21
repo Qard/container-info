@@ -1,0 +1,21 @@
+{
+  "name": "container-info",
+  "version": "1.0.0",
+  "description": "Parse container info from cgroups file",
+  "main": "index.js",
+  "scripts": {
+    "test": "tap test.js"
+  },
+  "keywords": [
+    "docker",
+    "kubernetes",
+    "container",
+    "cgroups",
+    "info"
+  ],
+  "author": "Stephen Belanger <admin@stephenbelanger.com> (https://github.com/qard)",
+  "license": "MIT",
+  "dependencies": {
+    "tap": "^12.1.1"
+  }
+}
