@@ -329,6 +329,21 @@ tap.test('containerInfo(123)', t => {
   })
 })
 
+tap.test('containerInfo() - error', t => {
+  t.plan(1)
+
+  const readFile = fs.readFile
+  fs.readFile = function (path, cb) {
+    fs.readFile = readFile
+    cb(new Error('boom'))
+  }
+
+  containerInfo(123).then(result => {
+    t.deepEqual(result, undefined)
+    t.end()
+  })
+})
+
 tap.test('containerInfoSync()', t => {
   t.plan(2)
 
@@ -339,9 +354,7 @@ tap.test('containerInfoSync()', t => {
     return data
   }
 
-  const result = sync()
-
-  t.deepEqual(result, expected)
+  t.deepEqual(sync(), expected)
   t.end()
 })
 
@@ -355,8 +368,19 @@ tap.test('containerInfoSync(123)', t => {
     return data
   }
 
-  const result = sync(123)
+  t.deepEqual(sync(123), expected)
+  t.end()
+})
 
-  t.deepEqual(result, expected)
+tap.test('containerInfoSync() - error', t => {
+  t.plan(1)
+
+  const readFileSync = fs.readFileSync
+  fs.readFileSync = function () {
+    fs.readFileSync = readFileSync
+    throw new Error('boom')
+  }
+
+  t.deepEqual(sync(), undefined)
   t.end()
 })

@@ -51,7 +51,7 @@ function parse (contents) {
 function containerInfo (pid = 'self') {
   return new Promise((resolve) => {
     fs.readFile(`/proc/${pid}/cgroup`, (err, data) => {
-      resolve(!err && parse(data.toString()))
+      resolve(err ? undefined : parse(data.toString()))
     })
   })
 }
