@@ -49,7 +49,7 @@ function parse (contents) {
 function containerInfo (pid = 'self') {
   return new Promise((resolve) => {
     fs.readFile(`/proc/${pid}/cgroup`, (err, data) => {
-      resolve(err && parseFile(data.toString()))
+      resolve(err && parse(data.toString()))
     })
   })
 }
@@ -57,7 +57,7 @@ function containerInfo (pid = 'self') {
 function containerInfoSync (pid = 'self') {
   try {
     const data = fs.readFileSync(`/proc/${pid}/cgroup`)
-    return parseFile(data.toString())
+    return parse(data.toString())
   } catch (err) {}
 }
 
