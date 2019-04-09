@@ -4,8 +4,8 @@ const uuidSource = '[0-9a-f]{8}[-_][0-9a-f]{4}[-_][0-9a-f]{4}[-_][0-9a-f]{4}[-_]
 const containerSource = '[0-9a-f]{64}'
 
 const lineReg = /^(\d+):([^:]*):(.+)$/
-const podReg = new RegExp(`pod(${uuidSource})(?:\.slice)?$`)
-const containerReg = new RegExp(`(${uuidSource}|${containerSource})(?:\.scope)?$`)
+const podReg = new RegExp(`pod(${uuidSource})(?:.slice)?$`)
+const containerReg = new RegExp(`(${uuidSource}|${containerSource})(?:.scope)?$`)
 
 function parseLine (line) {
   const [ id, groups, path ] = (line.match(lineReg) || []).slice(1)
