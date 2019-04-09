@@ -14,7 +14,7 @@
     "url": "https://github.com/Qard/container-info/issues"
   },
   "scripts": {
-    "test": "standard && tap test.js"
+    "test": "standard && tap test/test.js"
   },
   "keywords": [
     "docker",

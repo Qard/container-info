@@ -1,8 +1,14 @@
 'use strict'
 
+const fs = require('fs')
+const path = require('path')
 const tap = require('tap')
 
-const { parse } = require('./')
+const data = fs.readFileSync(path.join(__dirname, 'fixtures', 'cgroup'))
+const expected = require('./fixtures/result')
+
+const containerInfo = require('../')
+const { parse, sync } = containerInfo
 
 tap.test('basics', t => {
   t.deepEqual(parse(`
@@ -288,5 +294,69 @@ tap.test('basics', t => {
     ]
   })
 
+  t.end()
+})
+
+tap.test('containerInfo()', t => {
+  t.plan(2)
+
+  const readFile = fs.readFile
+  fs.readFile = function (path, cb) {
+    fs.readFile = readFile
+    t.equal(path, '/proc/self/cgroup')
+    cb(null, data)
+  }
+
+  containerInfo().then(result => {
+    t.deepEqual(result, expected)
+    t.end()
+  })
+})
+
+tap.test('containerInfo(123)', t => {
+  t.plan(2)
+
+  const readFile = fs.readFile
+  fs.readFile = function (path, cb) {
+    fs.readFile = readFile
+    t.equal(path, '/proc/123/cgroup')
+    cb(null, data)
+  }
+
+  containerInfo(123).then(result => {
+    t.deepEqual(result, expected)
+    t.end()
+  })
+})
+
+tap.test('containerInfoSync()', t => {
+  t.plan(2)
+
+  const readFileSync = fs.readFileSync
+  fs.readFileSync = function (path) {
+    fs.readFileSync = readFileSync
+    t.equal(path, '/proc/self/cgroup')
+    return data
+  }
+
+  const result = sync()
+
+  t.deepEqual(result, expected)
+  t.end()
+})
+
+tap.test('containerInfoSync(123)', t => {
+  t.plan(2)
+
+  const readFileSync = fs.readFileSync
+  fs.readFileSync = function (path) {
+    fs.readFileSync = readFileSync
+    t.equal(path, '/proc/123/cgroup')
+    return data
+  }
+
+  const result = sync(123)
+
+  t.deepEqual(result, expected)
   t.end()
 })
