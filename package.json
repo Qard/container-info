@@ -1,6 +1,6 @@
 {
   "name": "container-info",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parse container info from cgroups file",
   "author": "Stephen Belanger <admin@stephenbelanger.com> (https://github.com/qard)",
   "license": "MIT",
