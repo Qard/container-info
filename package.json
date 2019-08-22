@@ -24,7 +24,7 @@
     "info"
   ],
   "devDependencies": {
-    "standard": "^12.0.1",
+    "standard": "^14.0.1",
     "tap": "^12.1.1"
   }
 }
