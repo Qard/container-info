@@ -3,6 +3,14 @@
 module.exports = {
   entries: [
     {
+      id: '12',
+      groups: 'freezer',
+      path: '/kubepods.slice/kubepods-pod22949dce_fd8b_11ea_8ede_98f2b32c645c.slice/docker-b15a5bdedd2e7645c3be271364324321b908314e4c77857bbfd32a041148c07f.scope',
+      controllers: ['freezer'],
+      containerId: 'b15a5bdedd2e7645c3be271364324321b908314e4c77857bbfd32a041148c07f',
+      podId: '22949dce_fd8b_11ea_8ede_98f2b32c645c'
+    },
+    {
       id: '11',
       groups: 'devices',
       path: '/kubepods/besteffort/pod74c13223-5a00-11e9-b385-42010a80018d/34dc0b5e626f2c5c4c5170e34b10e7654ce36f0fcd532739f4445baabea03376',
