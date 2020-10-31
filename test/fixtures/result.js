@@ -3,6 +3,22 @@
 module.exports = {
   entries: [
     {
+      id: '14',
+      groups: 'pids',
+      path: '/kubepods/kubepods/besteffort/pod0e886e9a-3879-45f9-b44d-86ef9df03224/244a65edefdffe31685c42317c9054e71dc1193048cf9459e2a4dd35cbc1dba4',
+      controllers: ['pids'],
+      containerId: '244a65edefdffe31685c42317c9054e71dc1193048cf9459e2a4dd35cbc1dba4',
+      podId: '0e886e9a-3879-45f9-b44d-86ef9df03224'
+    },
+    {
+      id: '13',
+      groups: 'cpuset',
+      path: '/kubepods/pod5eadac96-ab58-11ea-b82b-0242ac110009/7fe41c8a2d1da09420117894f11dd91f6c3a44dfeb7d125dc594bd53468861df',
+      controllers: ['cpuset'],
+      containerId: '7fe41c8a2d1da09420117894f11dd91f6c3a44dfeb7d125dc594bd53468861df',
+      podId: '5eadac96-ab58-11ea-b82b-0242ac110009'
+    },
+    {
       id: '12',
       groups: 'freezer',
       path: '/kubepods.slice/kubepods-pod22949dce_fd8b_11ea_8ede_98f2b32c645c.slice/docker-b15a5bdedd2e7645c3be271364324321b908314e4c77857bbfd32a041148c07f.scope',
