@@ -4,10 +4,15 @@ const fs = require('fs')
 
 const uuidSource = '[0-9a-f]{8}[-_][0-9a-f]{4}[-_][0-9a-f]{4}[-_][0-9a-f]{4}[-_][0-9a-f]{12}'
 const containerSource = '[0-9a-f]{64}'
+const taskSource = '[0-9a-f]{32}'
 
 const lineReg = /^(\d+):([^:]*):(.+)$/
 const podReg = new RegExp(`pod(${uuidSource})(?:.slice)?$`)
 const containerReg = new RegExp(`(${uuidSource}|${containerSource})(?:.scope)?$`)
+const taskReg = new RegExp(`^/ecs/(${taskSource})/.*$`)
+
+const ecsMetadataFile = process.env.ECS_CONTAINER_METADATA_FILE
+const ecsMetadata = ecsMetadataSync()
 
 function parseLine (line) {
   const [ id, groups, path ] = (line.match(lineReg) || []).slice(1)
@@ -22,6 +27,9 @@ function parseLine (line) {
 
   const podId = (parts.pop().match(podReg) || [])[1]
   if (podId) data.podId = podId
+
+  const taskId = (path.match(taskReg) || [])[1]
+  if (taskId) data.taskId = taskId
 
   return data
 }
@@ -42,6 +50,12 @@ function parse (contents) {
       if (lineData.podId) {
         data.podId = lineData.podId
       }
+      if (lineData.taskId) {
+        data.taskId = lineData.taskId
+        if (ecsMetadata) {
+          data.containerId = ecsMetadata.ContainerID
+        }
+      }
     }
   }
 
@@ -60,6 +74,12 @@ function containerInfoSync (pid = 'self') {
   try {
     const data = fs.readFileSync(`/proc/${pid}/cgroup`)
     return parse(data.toString())
+  } catch (err) {}
+}
+
+function ecsMetadataSync () {
+  try {
+    return ecsMetadataFile && JSON.parse(fs.readFileSync(ecsMetadataFile))
   } catch (err) {}
 }
 
