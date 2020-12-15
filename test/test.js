@@ -7,6 +7,8 @@ const tap = require('tap')
 const data = fs.readFileSync(path.join(__dirname, 'fixtures', 'cgroup'))
 const expected = require('./fixtures/result')
 
+process.env.ECS_CONTAINER_METADATA_FILE = path.join(__dirname, 'fixtures', 'ecs-container-metadata.json')
+
 const containerInfo = require('../')
 const { parse, sync } = containerInfo
 
@@ -193,6 +195,22 @@ tap.test('basics', t => {
         controllers: ['name=systemd'],
         containerId: '2227daf62df6694645fee5df53c1f91271546a9560e8600a525690ae252b7f63',
         podId: '90d81341_92de_11e7_8cf2_507b9d4141fa'
+      }
+    ]
+  })
+
+  t.deepEqual(parse(`
+    1:name=systemd:/ecs/46686c7c701cdfdf2549f88f7b9575e9/46686c7c701cdfdf2549f88f7b9575e9-2574839563
+  `), {
+    containerId: '34dc0b5e626f2c5c4c5170e34b10e7654ce36f0fcd532739f4445baabea03376',
+    taskId: '46686c7c701cdfdf2549f88f7b9575e9',
+    entries: [
+      {
+        id: '1',
+        groups: 'name=systemd',
+        path: '/ecs/46686c7c701cdfdf2549f88f7b9575e9/46686c7c701cdfdf2549f88f7b9575e9-2574839563',
+        controllers: ['name=systemd'],
+        taskId: '46686c7c701cdfdf2549f88f7b9575e9'
       }
     ]
   })
