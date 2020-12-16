@@ -1,5 +1,7 @@
 # container-info
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Qard/container-info.svg)](https://greenkeeper.io/)
+
 Parse container info from cgroups file.
 
 ## Install
